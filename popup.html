@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rules</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Site rules</h1>
+    <div class="mode">
+      <label><input type="radio" name="mode" value="whitelist"> Whitelist mode</label>
+      <label><input type="radio" name="mode" value="blacklist"> Blacklist mode</label>
+      <div class="mode-hint">Whitelist = sites where the app is disabled; Blacklist = sites where the app is enabled. Use exceptions to invert on specific pages.</div>
+    </div>
+
+    <h2>Whitelist</h2>
+    <div id="whitelist"></div>
+    <div class="row">
+      <input id="wl_host" placeholder="host (example: vk.com)" />
+      <input id="wl_path" placeholder="pathStartsWith (optional, e.g. /feed or /shorts)" />
+      <button id="wl_add">Add</button>
+    </div>
+
+    <h2>Whitelist exceptions</h2>
+    <div id="wl_exc"></div>
+    <div class="row">
+      <input id="wle_host" placeholder="host (example: vk.com)" />
+      <input id="wle_path" placeholder="pathStartsWith (optional, e.g. /feed)" />
+      <button id="wle_add">Add</button>
+    </div>
+
+    <h2>Blacklist</h2>
+    <div id="blacklist"></div>
+    <div class="row">
+      <input id="bl_host" placeholder="host (example: youtube.com)" />
+      <input id="bl_path" placeholder="pathStartsWith (optional, e.g. /shorts)" />
+      <button id="bl_add">Add</button>
+    </div>
+
+    <h2>Blacklist exceptions</h2>
+    <div id="bl_exc"></div>
+    <div class="row">
+      <input id="ble_host" placeholder="host (example: vk.com)" />
+      <input id="ble_path" placeholder="pathStartsWith (optional, e.g. /feed)" />
+      <button id="ble_add">Add</button>
+    </div>
+
+    <div class="actions">
+      <button id="save">Save</button>
+      <button id="reset">Reset defaults</button>
+    </div>
+  </div>
+<script src="popup.js"></script>
+</body>
+</html>

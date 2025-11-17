@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Scroll Noise Punisher",
+  "version": "1.0",
+  "permissions": ["scripting", "tabs", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://youtube.com/*",
+        "*://*.vk.com/*",
+        "*://vk.com/*",
+        "*://*.instagram.com/*",
+        "*://instagram.com/*",
+        "*://*.tiktok.com/*",
+        "*://tiktok.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scroll Noise Punisher"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["sound.mp3"],
+      "matches": [
+        "*://www.tiktok.com/*",
+        "*://www.instagram.com/*",
+        "*://vk.com/*",
+        "*://www.youtube.com/*"
+      ]
+    }
+  ]
+}
