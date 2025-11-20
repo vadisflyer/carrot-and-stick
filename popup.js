@@ -6,6 +6,8 @@ const DEFAULT = {
   blacklist_exceptions: []
 };
 
+const DEFAULT_UI = { enabled: true, renderMode: 'soft' };
+
 function renderList(containerId, list) {
   const el = document.getElementById(containerId);
   el.innerHTML = '';
@@ -29,6 +31,14 @@ function renderAll(state){
   renderList('blacklist', state.blacklist);
   renderList('bl_exc', state.blacklist_exceptions);
   document.querySelectorAll('input[name="mode"]').forEach(i => i.checked = (i.value === state.mode));
+  // render UI controls
+  chrome.storage.local.get(['enabled','renderMode'], res => {
+    const enabled = (res.enabled === undefined) ? DEFAULT_UI.enabled : res.enabled;
+    const renderMode = res.renderMode || DEFAULT_UI.renderMode;
+    const toggle = document.getElementById('toggle');
+    if (toggle) toggle.textContent = enabled ? 'Toggle: On' : 'Toggle: Off';
+    document.querySelectorAll('input[name="renderMode"]').forEach(i => i.checked = (i.value === renderMode));
+  });
 }
 
 function load(){
@@ -72,6 +82,25 @@ function load(){
     document.getElementById('reset').onclick = () => {
       current = DEFAULT; chrome.storage.local.set({ rulesConfig: DEFAULT }, () => { renderAll(DEFAULT); alert('Reset'); });
     };
+
+    // Toggle button
+    const toggle = document.getElementById('toggle');
+    if (toggle){
+      toggle.onclick = () => {
+        chrome.storage.local.get(['enabled'], r => {
+          const cur = r.enabled === undefined ? DEFAULT_UI.enabled : r.enabled;
+          const next = !cur;
+          chrome.storage.local.set({ enabled: next }, () => { toggle.textContent = next ? 'Toggle: On' : 'Toggle: Off'; });
+        });
+      };
+    }
+
+    // Render mode radios
+    document.querySelectorAll('input[name="renderMode"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.checked) chrome.storage.local.set({ renderMode: radio.value });
+      });
+    });
   });
 }
 
